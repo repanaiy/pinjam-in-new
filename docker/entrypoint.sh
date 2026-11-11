@@ -7,6 +7,11 @@ sleep 5
 # Run database migrations FIRST
 php /var/www/html/artisan migrate --force
 
+# Seed admin + data awal (idempotent) jika INITIAL_ADMIN_PASSWORD diisi
+if [ -n "$INITIAL_ADMIN_PASSWORD" ]; then
+    php /var/www/html/artisan db:seed --class=ProductionSeeder --force
+fi
+
 # Set permissions
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
