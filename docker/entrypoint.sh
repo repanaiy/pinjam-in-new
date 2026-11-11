@@ -12,6 +12,11 @@ if [ -n "$INITIAL_ADMIN_PASSWORD" ]; then
     php /var/www/html/artisan db:seed --class=ProductionSeeder --force
 fi
 
+# Data demo (akun, alat, pengajuan) jika SEED_DEMO_DATA=true. Hapus variabel setelah deploy pertama.
+if [ "$SEED_DEMO_DATA" = "true" ]; then
+    php /var/www/html/artisan db:seed --force
+fi
+
 # Set permissions
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
