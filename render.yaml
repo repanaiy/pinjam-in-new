@@ -1,0 +1,60 @@
+services:
+  - type: web
+    name: pinjam-in-web
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    region: singapore
+    plan: starter
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        fromDatabase:
+          name: pinjam-in-db
+          property: host
+        scope: RUN_AND_BUILD
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        fromService:
+          name: pinjam-in-db
+          property: host
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_DATABASE
+        fromDatabase:
+          name: pinjam-in-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: pinjam-in-db
+          property: username
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: pinjam-in-db
+          property: password
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: SESSION_DRIVER
+        value: database
+      - key: MAIL_MAILER
+        value: smtp
+      - key: APP_KEY
+        sync: false
+      - key: VITE_REVERB_HOST
+        value: pinjam-in-web.onrender.com
+      - key: VITE_REVERB_PORT
+        value: "443"
+      - key: VITE_REVERB_SCHEME
+        value: https
+
+  - type: database
+    name: pinjam-in-db
+    dbName: pinjam_alat
+    user: pinjam_user
+    plan: starter
+    region: singapore

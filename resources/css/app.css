@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html { @apply antialiased; }
+    body { @apply bg-slate-50 text-slate-800; }
+    [x-cloak] { display: none !important; }
+    :focus-visible { @apply outline-2 outline-offset-2 outline-emerald-600; }
+}
+
+@layer components {
+    .card { @apply rounded-xl border border-slate-200 bg-white; }
+    .field-label { @apply mb-1.5 block text-sm font-medium text-slate-700; }
+    .field-control {
+        @apply block w-full rounded-lg border-slate-300 bg-white text-sm text-slate-900 shadow-sm
+               placeholder:text-slate-400 focus:border-emerald-600 focus:ring-emerald-600
+               disabled:bg-slate-100 disabled:text-slate-500;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
