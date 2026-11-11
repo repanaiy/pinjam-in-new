@@ -7,6 +7,11 @@ sleep 5
 # Run database migrations FIRST
 php /var/www/html/artisan migrate --force
 
+# Impor dump sekali: set IMPORT_DUMP=true, deploy, lalu HAPUS variabelnya.
+if [ "$IMPORT_DUMP" = "true" ]; then
+    php /var/www/html/artisan db:import-dump --force || echo "IMPORT DUMP GAGAL"
+fi
+
 # Seed admin + data awal (idempotent) jika INITIAL_ADMIN_PASSWORD diisi
 if [ -n "$INITIAL_ADMIN_PASSWORD" ]; then
     php /var/www/html/artisan db:seed --class=ProductionSeeder --force
